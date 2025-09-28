@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Vokabeltrainer</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; }
+  .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  h1, h2 { text-align: center; }
+  input { padding: 8px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+  button { padding: 8px 12px; margin: 5px 3px; border: none; border-radius: 6px; background: #4f46e5; color: white; cursor: pointer; }
+  button:hover { background: #4338ca; }
+  .hidden { display: none; }
+  ul { list-style: none; padding: 0; }
+  ul li { padding: 5px; background: #f0f0f0; margin: 3px 0; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
+  ul li span { flex: 1; }
+  .deleteBtn { background: #dc2626; }
+  #hint { font-style: italic; color: #555; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Vokabeltrainer</h1>
+
+  <!-- Verwaltung -->
+  <section id="editor">
+    <h2>Vokabel hinzufügen</h2>
+    <input id="frontInput" type="text" placeholder="Fremdsprache (z. B. apple)">
+    <input id="backInput" type="text" placeholder="Deutsch (z. B. Apfel; mehrere Antworten mit ; trennen)">
+    <button id="addBtn">Hinzufügen</button>
+
+    <h3>Gespeicherte Vokabeln</h3>
+    <ul id="list"></ul>
+  </section>
+
+  <!-- Quiz -->
+  <section id="quiz" class="hidden">
+    <h2>Quiz</h2>
+    <p id="question"></p>
+    <input id="answerInput" type="text" placeholder="Deutsche Übersetzung">
+    <button id="checkBtn">Antwort prüfen</button>
+    <button id="nextBtn">Nächste Frage</button>
+    <button id="hintBtn">Tipp anzeigen</button>
+    <p id="feedback"></p>
+    <p id="hint"></p>
+    <p id="score"></p>
+  </section>
+
+  <div class="actions">
+    <button id="startQuizBtn">Quiz starten</button>
+    <button id="editBtn">Zur Verwaltung</button>
+    <button id="resetBtn">Alles löschen</button>
+    <button id="exportBtn">Exportieren</button>
+    <input type="file" id="importFile" accept=".csv" hidden>
+    <button id="importBtn">Importieren</button>
+  </div>
+</div>
+
+<script>
+let pairs = [
+{ front: "baseball", back: ["Baseball"] },
+{ front: "favorite (AE) / favourite (BE)", back: ["Lieblings-"] },
+{ front: "track and field", back: ["Leichtathletik"] },
+{ front: "recipe", back: ["Rezept"] },
+{ front: "sustainable", back: ["zukunftsfähig","nachhaltig"] },
+{ front: "fashion", back: ["Mode"] },
+{ front: "hot dog", back: ["Hotdog"] },
+{ front: "currency", back: ["Währung"] },
+{ front: "US (AE)", back: ["US-amerikanisch"] },
+{ front: "state", back: ["Bundesstaat","Staat","Land","Zustand"] },
+{ front: "foot (AE)", back: ["Fuß"] },
+{ front: "spectacular", back: ["spektakulär"] },
+{ front: "Native American", back: ["amerikanische Urbevölkerung","amerikanische Ureinwohner"] },
+{ front: "tribe", back: ["Stamm","Volkstum"] },
+{ front: "European", back: ["Europäer","Europäerin"] },
+{ front: "settler", back: ["Siedler","Siedlerin"] },
+{ front: "immigration", back: ["Einwanderung","Immigration","Zuwanderung","Einreise"] },
+{ front: "center (AE) / centre (BE)", back: ["Zentrum","Mitte","Center"] },
+{ front: "immigrant", back: ["Einwanderer","Einwanderin"] },
+{ front: "whale watching", back: ["Walbeobachtung"] },
+{ front: "up and down", back: ["entlang"] },
+{ front: "percent", back: ["Prozent"] },
+{ front: "economy", back: ["Wirtschaft"] },
+{ front: "financial", back: ["Finanz-"] },
+{ front: "runner", back: ["Läufer","Läuferin"] },
+{ front: "marathon", back: ["Marathon"] },
+{ front: "to raise money", back: ["Geld sammeln","Geld aufbringen"] },
+{ front: "historical", back: ["historisch","geschichtlich"] },
+{ front: "government", back: ["Regierung"] },
+{ front: "attraction", back: ["Attraktion","Sehenswürdigkeit"] },
+{ front: "viewing", back: ["Aussichts-"] },
+{ front: "side", back: ["Seite"] },
+{ front: "story (AE) / storey (BE)", back: ["Etage","Stockwerk"] },
+{ front: "steel", back: ["Stahl"] },
+{ front: "skyscraper", back: ["Wolkenkratzer"] },
+{ front: "above", back: ["über","oberhalb"] },
+{ front: "best of all", back: ["am besten","das Beste"] },
+{ front: "outdoor", back: ["außer-","im Freien"] },
+{ front: "elevator (AE) / lift (BE)", back: ["Aufzug","Lift"] },
+{ front: "former", back: ["ehemalige","frühere"] },
+{ front: "railroad (AE) / railway (BE)", back: ["Eisenbahn"] },
+{ front: "track", back: ["Strecke","Gleis"] },
+{ front: "half", back: ["halb"] },
+{ front: "subway (AE) / underground (BE)", back: ["U-Bahn"] },
+{ front: "aircraft carrier", back: ["Flugzeugträger"] },
+{ front: "submarine", back: ["U-Boot"] },
+{ front: "space shuttle", back: ["Raumfähre"] },
+{ front: "brand", back: ["Marke"] },
+{ front: "designer", back: ["Designer","Designer/in","Gestalter","Entwickler"] },
+{ front: "store (AE) / shop (BE)", back: ["Laden","Geschäft"] },
+{ front: "to design", back: ["entwerfen","gestalten","entwickeln"] },
+{ front: "not … anything", back: ["nichts"] },
+{ front: "oh well", back: ["was soll's"] },
+{ front: "basement (AE) / cellar (BE)", back: ["Keller","Untergeschoss"] },
+{ front: "balcony", back: ["Balkon"] },
+{ front: "solar panel", back: ["Sonnenkollektor"] },
+{ front: "ground level", back: ["Erdgeschoss"] },
+{ front: "staircase", back: ["Treppe","Treppenhaus"] },
+{ front: "parking lot (AE) / car park (BE)", back: ["Parkplatz"] },
+{ front: "lobby", back: ["Eingangshalle","Empfangshalle","Foyer"] },
+{ front: "terrace", back: ["Terrasse"] },
+{ front: "loft", back: ["Dachboden"] },
+{ front: "fire escape", back: ["Notausgang"] },
+{ front: "apartment (AE) / flat (BE)", back: ["Wohnung","Apartment"] },
+{ front: "taxi", back: ["Taxi"] },
+{ front: "barbecue", back: ["Grillfest","Grill"] },
+{ front: "ceremony", back: ["Zeremonie","Feier"] },
+{ front: "independence", back: ["Unabhängigkeit"] },
+{ front: "parade", back: ["Parade","Umzug"] },
+{ front: "freedom", back: ["Freiheit","Unabhängigkeit"] },
+{ front: "citizen", back: ["Staatsbürger","Staatsbürgerin"] },
+{ front: "attack", back: ["Anschlag","Attacke","Angriff","Überfall"] },
+{ front: "memorial", back: ["Denkmal","Gedenkstätte"] }
+];
+
+if (!localStorage.getItem("vokabeln")) localStorage.setItem("vokabeln", JSON.stringify(pairs));
+
+let currentIndex = null;
+let score = { correct: 0, total: 0 };
+
+const frontInput = document.getElementById("frontInput");
+const backInput = document.getElementById("backInput");
+const addBtn = document.getElementById("addBtn");
+const list = document.getElementById("list");
+const startQuizBtn = document.getElementById("startQuizBtn");
+const editBtn = document.getElementById("editBtn");
+const resetBtn = document.getElementById("resetBtn");
+const quizSection = document.getElementById("quiz");
+const editorSection = document.getElementById("editor");
+const question = document.getElementById("question");
+const answerInput = document.getElementById("answerInput");
+const checkBtn = document.getElementById("checkBtn");
+const nextBtn = document.getElementById("nextBtn");
+const hintBtn = document.getElementById("hintBtn");
+const feedback = document.getElementById("feedback");
+const hint = document.getElementById("hint");
+const scoreDisplay = document.getElementById("score");
+
+function save() { localStorage.setItem("vokabeln", JSON.stringify(pairs)); }
+
+function renderList() {
+  list.innerHTML = "";
+  pairs.forEach((p,i)=>{
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${p.front} → ${Array.isArray(p.back)?p.back.join("; "):p.back}</span>`;
+    const del = document.createElement("button");
+    del.textContent="Löschen"; del.classList.add("deleteBtn");
+    del.onclick=()=>{ pairs.splice(i,1); save(); renderList(); };
+    li.appendChild(del);
+    list.appendChild(li);
+  });
+}
+
+function addPair() {
+  if (!frontInput.value.trim() || !backInput.value.trim()) return;
+  const backs = backInput.value.split(";").map(s=>s.trim());
+  pairs.push({ front: frontInput.value.trim(), back: backs });
+  frontInput.value=""; backInput.value="";
+  save(); renderList();
+}
+
+function startQuiz() {
+  if (pairs.length===0) return alert("Keine Vokabeln gespeichert!");
+  editorSection.classList.add("hidden");
+  quizSection.classList.remove("hidden");
+  score={correct:0,total:0};
+  nextQuestion(true);
+}
+
+function nextQuestion(force){
+  if (pairs.length===0) return;
+  let idx=Math.floor(Math.random()*pairs.length);
+  if(!force && pairs.length>1 && idx===currentIndex) idx=(idx+1)%pairs.length;
+  currentIndex=idx;
+  question.textContent=`Übersetze: ${pairs[idx].front}`;
+  answerInput.value="";
+  feedback.textContent="";
+  hint.textContent="";
+}
+
+function checkAnswer(){
+  if(currentIndex===null) return;
+  const correctAnswers=pairs[currentIndex].back.map(a=>a.toLowerCase());
+  const user=answerInput.value.trim().toLowerCase();
+  const userClean=user.replace(/^(der|die|das)\s+/i,"");
+  const isCorrect=correctAnswers.some(ans=>userClean.includes(ans.toLowerCase()));
+  feedback.textContent=isCorrect?"Richtig!":`Falsch — richtig wäre: ${pairs[currentIndex].back.join("; ")}`;
+  feedback.style.color=isCorrect?"green":"red";
+  score.total++; if(isCorrect) score.correct++;
+  scoreDisplay.textContent=`Punkte: ${score.correct} / ${score.total}`;
+}
+
+hintBtn.onclick=()=>{
+  if(currentIndex===null) return;
+  const firstAnswer=pairs[currentIndex].back[0];
+  const letters=Math.min(3,firstAnswer.length);
+  const hintText=firstAnswer.substring(0,letters)+"*".repeat(firstAnswer.length-letters);
+  hint.textContent=`Tipp: ${hintText}`;
+}
+
+function resetAll(){
+  if(!confirm("Alle Vokabeln löschen?")) return;
+  pairs=[]; save(); renderList();
+  currentIndex=null; feedback.textContent=""; hint.textContent=""; scoreDisplay.textContent="";
+  editorSection.classList.remove("hidden"); quizSection.classList.add("hidden");
+}
+
+function exportCSV(){
+  if(pairs.length===0) return alert("Keine Vokabeln zum Exportieren.");
+  let csv="Fremdsprache,Deutsch\n";
+  pairs.forEach(p=>{ csv+=`"${p.front.replace(/"/g,'""')}","${Array.isArray(p.back)?p.back.join("; ").replace(/"/g,'""'):p.back}"\n`; });
+  const blob=new Blob([csv],{type:"text/csv"});
+  const url=URL.createObjectURL(blob); const a=document.createElement("a");
+  a.href=url; a.download="vokabeln.csv"; a.click(); URL.revokeObjectURL(url);
+}
+
+function importCSV(file){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const text=e.target.result;
+    const lines=text.split("\n").slice(1);
+    lines.forEach(line=>{
+      const cols=line.split(",");
+      if(cols.length>=2){
+        const front=cols[0].replace(/^\"|\"$/g,"").trim();
+        const back=cols[1].replace(/^\"|\"$/g,"").trim().split(";").map(s=>s.trim());
+        if(front && back.length>0) pairs.push({front,back});
+      }
+    });
+    save(); renderList(); alert("Import abgeschlossen!");
+  };
+  reader.readAsText(file);
+}
+
+addBtn.onclick=addPair;
+startQuizBtn.onclick=startQuiz;
+editBtn.onclick=()=>{ quizSection.classList.add("hidden"); editorSection.classList.remove("hidden"); };
+resetBtn.onclick=resetAll;
+checkBtn.onclick=checkAnswer;
+nextBtn.onclick=()=>nextQuestion(false);
+document.getElementById("exportBtn").onclick=exportCSV;
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").onchange=e=>{ if(e.target.files.length>0) importCSV(e.target.files[0]); };
+
+renderList();
+</script>
+</body>
+</html>
