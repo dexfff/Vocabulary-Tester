@@ -19,7 +19,8 @@ Die Website läuft direkt im Browser, sowohl auf dem PC als auch auf Tablets ode
 
 ## Lizenz
 
-Für Schulprojekte oder private Nutzung empfehle ich eine **MIT-Lizenz**, da sie sehr einfach ist und erlaubt, dass andere das Projekt nutzen, kopieren oder anpassen dürfen – auch für Lernzwecke.  
+Dieses Projekt steht unter der [MIT-Lizenz](LICENSE).  
+Du darfst die Software verwenden, kopieren, ändern und weitergeben, solange der Lizenzhinweis erhalten bleibt.
 
 ## Hinweis
 
