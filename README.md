@@ -1,28 +1,30 @@
 # Vokabeltrainer für die Schule
 
-Dies ist ein einfacher Vokabeltrainer, den ich für den Schulgebrauch erstellt habe.  
-Mit dieser Website kannst du:
+Dies ist ein **Vokabeltrainer**, den ich für die Schule erstellt habe.  
+Er ermöglicht:
 
-- Fremdsprachen-Vokabeln eingeben und verwalten
-- Ein Quiz durchführen, um dein Wissen zu testen
-- Tipps für die Übersetzung anzeigen lassen
-- Vokabeln exportieren und importieren (CSV)
+- Vokabeln hinzufügen, bearbeiten und löschen  
+- Vokabeln nach Anfangsbuchstaben filtern (A–Z)  
+- Alle Vokabeln anzeigen mit Anzahl  
+- Quizmodus mit **Richtig/Falsch-Anzeige**, **Tippfunktion** und Score  
+- Design anpassen: Farben, Schriftarten, Regenbogenmodus  
+- Mobile- und iPad-kompatibel  
 
-Die Website läuft direkt im Browser, sowohl auf dem PC als auch auf Tablets oder Schul-iPads.
+## Installation / Nutzung
 
-## Verwendung
-
-1. Öffne die `index.html` im Browser.
-2. Füge neue Vokabeln hinzu oder verwende die vorinstallierten.
-3. Starte das Quiz und prüfe deine Kenntnisse.
-4. Nutze die Tipp-Funktion, wenn du Hilfe benötigst.
+1. Die Datei `vokabeltrainer.html` herunterladen oder vom GitHub-Repo klonen.
+2. Die HTML-Datei auf einem Gerät öffnen (PC, iPad, Handy).  
+3. Vokabeln können direkt hinzugefügt oder die bereits enthaltenen verwendet werden.  
+4. Quiz starten, Tipps nutzen, Design anpassen.
 
 ## Lizenz
 
-Dieses Projekt steht unter der [MIT-Lizenz](LICENSE).  
-Du darfst die Software verwenden, kopieren, ändern und weitergeben, solange der Lizenzhinweis erhalten bleibt.
+Dieses Projekt ist unter der **MIT-Lizenz** lizenziert.  
+Du darfst es frei nutzen, ändern und weitergeben, auch für schulische Zwecke.
 
-## Hinweis
+---
 
-Dieses Projekt ist **für den schulischen Gebrauch** erstellt und dient ausschließlich Lernzwecken.  
-Es werden keine Daten an Dritte weitergegeben.
+**Hinweis:**  
+- Lokale Speicherung erfolgt über den Browser (LocalStorage), sodass die Vokabeln auf deinem Gerät verfügbar bleiben.  
+- Regenbogenmodus kann ein- und ausgeschaltet werden.  
+- Tipp-Funktion zeigt nur den Anfang der Wörter an, Artikel (`der/die/das`) bleiben sichtbar.
