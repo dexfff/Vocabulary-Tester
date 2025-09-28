@@ -2,27 +2,26 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Vokabeltrainer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vokabeltrainer</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto&display=swap" rel="stylesheet">
 <style>
 body { font-family:'Poppins',sans-serif; background:#f5f7fa; margin:0; padding:10px; color:#000; transition:all 0.3s;}
 .container { max-width:900px; margin:auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.15); transition:all 0.3s;}
-h1,h2 { text-align:center;}
-input,select { padding:10px;margin:5px 0;width:100%;box-sizing:border-box;font-size:1em;}
-button { padding:10px 15px;margin:5px 3px;border:none;border-radius:6px;background:#4f46e5;color:white;cursor:pointer; transition:all 0.3s;font-size:1em;}
-button:hover { background:#4338ca;}
-.letter-bar { text-align:center; margin:10px 0; display:flex; flex-wrap:wrap; justify-content:center;}
-.letter-bar button { background:#888; padding:7px 12px; margin:3px; border-radius:4px; color:white; font-size:0.9em;}
-.letter-bar button:hover { background:#555;}
-.hidden { display:none;}
-#vocabGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:10px 0;}
-.vocabCard { background:#f0f0f0; padding:10px; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.1); transition:all 0.3s; display:flex; flex-direction:column; justify-content:space-between;}
-.vocabCard:hover { transform:translateY(-3px); box-shadow:0 4px 10px rgba(0,0,0,0.2);}
-.vocabCard span { word-break:break-word; margin-bottom:5px;}
-.deleteBtn { background:#dc2626; margin-top:5px;}
-#hint { font-style:italic; color:#555; margin-top:5px;}
-#totalCount { text-align:center; margin:10px 0; font-weight:bold;}
+h1,h2 { text-align:center; }
+input,select { padding:10px; margin:5px 0; width:100%; box-sizing:border-box; font-size:1em; }
+button { padding:10px 15px; margin:5px 3px; border:none; border-radius:6px; background:#4f46e5; color:white; cursor:pointer; transition:all 0.3s; font-size:1em; }
+button:hover { background:#4338ca; }
+.letter-bar { text-align:center; margin:10px 0; display:flex; flex-wrap:wrap; justify-content:center; }
+.letter-bar button { background:#888; padding:7px 12px; margin:3px; border-radius:4px; color:white; font-size:0.9em; }
+.letter-bar button:hover { background:#555; }
+#vocabGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:10px 0; }
+.vocabCard { background:#f0f0f0; padding:10px; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,0.1); transition:all 0.3s; display:flex; flex-direction:column; justify-content:space-between; }
+.vocabCard:hover { transform:translateY(-3px); box-shadow:0 4px 10px rgba(0,0,0,0.2); }
+.vocabCard span { word-break:break-word; margin-bottom:5px; }
+.deleteBtn { background:#dc2626; margin-top:5px; }
+#hint { font-style:italic; color:#555; margin-top:5px; }
+#totalCount { text-align:center; margin:10px 0; font-weight:bold; }
 @media(max-width:600px){ .container { padding:15px; } button{ font-size:0.9em; padding:8px 10px; } input,select{ font-size:0.9em; } .letter-bar button{ padding:6px 8px; font-size:0.8em; } }
 </style>
 </head>
@@ -32,30 +31,20 @@ button:hover { background:#4338ca;}
 
 <section id="design">
 <h2>Design anpassen</h2>
-<label>Hintergrundfarbe:
-  <input type="color" id="bgColorPicker" value="#f5f7fa">
-</label>
-<label>Textfarbe:
-  <input type="color" id="textColorPicker" value="#000000">
-</label>
-<label>Button-Farbe:
-  <input type="color" id="buttonColorPicker" value="#4f46e5">
-</label>
-<label>Container-Farbe:
-  <input type="color" id="containerColorPicker" value="#ffffff">
-</label>
-<label>Karten-Farbe:
-  <input type="color" id="cardColorPicker" value="#f0f0f0">
-</label>
+<label>Hintergrundfarbe: <input type="color" id="bgColorPicker" value="#f5f7fa"></label>
+<label>Textfarbe: <input type="color" id="textColorPicker" value="#000000"></label>
+<label>Button-Farbe: <input type="color" id="buttonColorPicker" value="#4f46e5"></label>
+<label>Container-Farbe: <input type="color" id="containerColorPicker" value="#ffffff"></label>
+<label>Karten-Farbe: <input type="color" id="cardColorPicker" value="#f0f0f0"></label>
 <label>Schriftart:
-  <select id="fontPicker">
-    <option value="'Poppins', sans-serif" selected>Poppins</option>
-    <option value="'Roboto', sans-serif">Roboto</option>
-    <option value="'Arial', sans-serif">Arial</option>
-    <option value="'Verdana', sans-serif">Verdana</option>
-    <option value="'Courier New', monospace">Courier New</option>
-    <option value="'Georgia', serif">Georgia</option>
-  </select>
+<select id="fontPicker">
+<option value="'Poppins', sans-serif" selected>Poppins</option>
+<option value="'Roboto', sans-serif">Roboto</option>
+<option value="'Arial', sans-serif">Arial</option>
+<option value="'Verdana', sans-serif">Verdana</option>
+<option value="'Courier New', monospace">Courier New</option>
+<option value="'Georgia', serif">Georgia</option>
+</select>
 </label>
 <button id="rainbowBtn">🌈 Regenbogenmodus an</button>
 <button id="stopRainbowBtn">🌈 Regenbogenmodus aus</button>
@@ -67,64 +56,173 @@ button:hover { background:#4338ca;}
 <p id="totalCount"></p>
 
 <section id="editor">
-<h2>Vokabel hinzufügen</h2>
+<h2>Vokabel hinzufügen / bearbeiten</h2>
 <input id="frontInput" type="text" placeholder="Fremdsprache z.B. apple">
 <input id="backInput" type="text" placeholder="Deutsch z.B. Apfel; mehrere Antworten mit ; trennen">
 <button id="addBtn">Hinzufügen</button>
-<h3>Gespeicherte Vokabeln</h3>
 <div id="vocabGrid"></div>
-</section>
-
-<section id="quiz" class="hidden">
-<h2>Quiz</h2>
-<div id="quizCard" class="vocabCard" style="text-align:center;font-size:1.1em;">
-<p id="question"></p>
-<input type="text" id="answerInput" placeholder="Deine Übersetzung">
-<button id="checkBtn">Prüfen</button>
-<button id="nextBtn">Nächste Frage</button>
-<button id="hintBtn">Tipp anzeigen</button>
-<p id="feedback"></p>
-<p id="hint"></p>
-<p id="score"></p>
-</div>
 </section>
 
 <div class="actions">
 <button id="startQuizBtn">Quiz starten</button>
-<button id="editBtn">Zur Verwaltung</button>
-<button id="resetBtn">Alles löschen</button>
 </div>
 </div>
 
 <script>
-// 10 Vokabeln
-let pairs = [
-  { front:"baseball", back:["der Baseball"] },
-  { front:"favorite (AE) / favourite (BE)", back:["Lieblings-"] },
-  { front:"track and field", back:["die Leichtathletik"] },
-  { front:"recipe", back:["das Rezept"] },
-  { front:"sustainable", back:["zukunftsfähig","nachhaltig"] },
-  { front:"fashion", back:["die Mode"] },
-  { front:"hot dog", back:["der Hotdog"] },
-  { front:"currency", back:["die Währung"] },
-  { front:"US (AE)", back:["US-amerikanisch"] },
-  { front:"state", back:["der Bundesstaat","der Staat","das Land","der Zustand"] }
+// --- Vokabeln ---
+let pairs = JSON.parse(localStorage.getItem("vokabeln")) || [
+{ front:"baseball", back:["der Baseball"] },
+{ front:"state", back:["der Bundesstaat","der Staat","das Land","der Zustand"] },
+{ front:"fashion", back:["die Mode"] },
+{ front:"recipe", back:["das Rezept"] },
+{ front:"hot dog", back:["der Hotdog"] },
+{ front:"currency", back:["die Währung"] },
+{ front:"US (AE)", back:["US-amerikanisch"] },
+{ front:"sustainable", back:["zukunftsfähig","nachhaltig"] },
+{ front:"track and field", back:["die Leichtathletik"] },
+{ front:"favorite (AE) / favourite (BE)", back:["Lieblings-"] }
 ];
 
-localStorage.setItem("vokabeln", JSON.stringify(pairs));
-
-let currentIndex=null, score={correct:0, incorrect:0, total:0}, answered=false;
-
-// Elemente
-const frontInput=document.getElementById("frontInput");
-const backInput=document.getElementById("backInput");
-const addBtn=document.getElementById("addBtn");
+// --- Design ---
 const vocabGrid=document.getElementById("vocabGrid");
+const letterBar=document.getElementById("letterBar");
+const showAllBtn=document.getElementById("showAllBtn");
+const totalCount=document.getElementById("totalCount");
 const startQuizBtn=document.getElementById("startQuizBtn");
-const editBtn=document.getElementById("editBtn");
-const resetBtn=document.getElementById("resetBtn");
-const quizSection=document.getElementById("quiz");
-const editorSection=document.getElementById("editor");
+
+const bgColorPicker=document.getElementById("bgColorPicker");
+const textColorPicker=document.getElementById("textColorPicker");
+const buttonColorPicker=document.getElementById("buttonColorPicker");
+const containerColorPicker=document.getElementById("containerColorPicker");
+const cardColorPicker=document.getElementById("cardColorPicker");
+const fontPicker=document.getElementById("fontPicker");
+const rainbowBtn=document.getElementById("rainbowBtn");
+const stopRainbowBtn=document.getElementById("stopRainbowBtn");
+const resetDesignBtn=document.getElementById("resetDesignBtn");
+
+let rainbowInterval=null;
+
+function savePairs(){ localStorage.setItem("vokabeln",JSON.stringify(pairs)); }
+
+function applyDesign(){
+document.body.style.background=bgColorPicker.value;
+document.body.style.color=textColorPicker.value;
+document.querySelector(".container").style.background=containerColorPicker.value;
+document.querySelectorAll("button").forEach(b=>b.style.background=buttonColorPicker.value);
+document.querySelectorAll(".vocabCard").forEach(c=>c.style.background=cardColorPicker.value);
+document.body.style.fontFamily=fontPicker.value;
+}
+
+bgColorPicker.addEventListener("input",applyDesign);
+textColorPicker.addEventListener("input",applyDesign);
+buttonColorPicker.addEventListener("input",applyDesign);
+containerColorPicker.addEventListener("input",applyDesign);
+cardColorPicker.addEventListener("input",applyDesign);
+fontPicker.addEventListener("change",applyDesign);
+
+resetDesignBtn.onclick=()=>{
+bgColorPicker.value="#f5f7fa"; textColorPicker.value="#000000";
+buttonColorPicker.value="#4f46e5"; containerColorPicker.value="#ffffff"; cardColorPicker.value="#f0f0f0"; fontPicker.value="'Poppins', sans-serif";
+if(rainbowInterval){ clearInterval(rainbowInterval); rainbowInterval=null; }
+applyDesign();
+};
+
+rainbowBtn.onclick=()=>{
+if(rainbowInterval) return;
+let hue=0;
+rainbowInterval=setInterval(()=>{
+document.body.style.background=`hsl(${hue},80%,85%)`;
+document.body.style.color=`hsl(${(hue+180)%360},80%,20%)`;
+document.querySelector(".container").style.background=`hsl(${(hue+90)%360},80%,95%)`;
+document.querySelectorAll("button").forEach(b=>b.style.background=`hsl(${(hue+60)%360},80%,50%)`);
+document.querySelectorAll(".vocabCard").forEach(c=>c.style.background=`hsl(${(hue+30)%360},80%,90%)`);
+hue=(hue+1)%360;
+},50);
+};
+stopRainbowBtn.onclick=()=>{
+if(rainbowInterval){ clearInterval(rainbowInterval); rainbowInterval=null; applyDesign(); }
+};
+
+// --- Vokabel-Rendering ---
+function renderList(filterLetter=null){
+vocabGrid.innerHTML="";
+let display=pairs;
+if(filterLetter) display=pairs.filter(p=>p.front[0].toLowerCase()===filterLetter.toLowerCase());
+display.forEach((p,i)=>{
+const div=document.createElement("div");
+div.className="vocabCard";
+div.innerHTML=`<span contenteditable="true" class="front">${p.front}</span><span contenteditable="true" class="back">${p.back.join("; ")}</span>`;
+const del=document.createElement("button");
+del.textContent="Löschen"; del.classList.add("deleteBtn");
+del.onclick=()=>{ pairs.splice(i,1); savePairs(); renderList(); };
+div.appendChild(del);
+div.querySelector(".front").addEventListener("input",(e)=>{ p.front=e.target.innerText; savePairs(); });
+div.querySelector(".back").addEventListener("input",(e)=>{ p.back=e.target.innerText.split(";").map(x=>x.trim()); savePairs(); });
+vocabGrid.appendChild(div);
+});
+totalCount.textContent=`Gesamt: ${pairs.length} Vokabeln`;
+}
+
+// --- Buchstabenleiste ---
+function renderLetterBar(){
+const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+letterBar.innerHTML="";
+letters.forEach(l=>{
+const btn=document.createElement("button"); btn.textContent=l;
+btn.onclick=()=>renderList(l);
+letterBar.appendChild(btn);
+});
+}
+showAllBtn.onclick=()=>renderList();
+
+document.getElementById("addBtn").onclick=()=>{
+const front=document.getElementById("frontInput").value.trim();
+const back=document.getElementById("backInput").value.trim().split(";").map(x=>x.trim());
+if(front && back.length>0){ pairs.push({front,back}); savePairs(); renderList(); document.getElementById("frontInput").value=""; document.getElementById("backInput").value=""; }
+};
+
+renderList(); renderLetterBar(); applyDesign();
+
+// --- Quiz starten in neuem Tab mit Popup-Check ---
+startQuizBtn.onclick = () => {
+if(pairs.length === 0){ alert("Keine Vokabeln gespeichert!"); return; }
+
+const quizWindow = window.open("", "_blank");
+if(!quizWindow){ alert("Popup blockiert! Bitte deaktivieren."); return; }
+
+const newWindowHtml = `
+<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="UTF-8"><title>Vokabel-Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:'Poppins',sans-serif;background:#f5f7fa;padding:20px;color:#000;}
+.vocabCard{background:#fff;padding:20px;border-radius:12px;max-width:600px;margin:auto;text-align:center;}
+input{padding:10px;width:80%;margin:10px 0;}
+button{padding:10px 15px;margin:5px;background:#4f46e5;color:white;border:none;border-radius:6px;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="vocabCard">
+<h2>Vokabel-Quiz</h2>
+<p id="question"></p>
+<input type="text" id="answerInput" placeholder="Deine Übersetzung">
+<div>
+<button id="checkBtn">Prüfen</button>
+<button id="nextBtn">Nächste</button>
+<button id="hintBtn">Tipp</button>
+</div>
+<p id="feedback"></p><p id="hint"></p><p id="score"></p>
+<div id="scoreboardDiv"><h3>Scoreboard</h3><ul id="scoreList"></ul></div>
+</div>
+<script>
+const pairs=${JSON.stringify(pairs)};
+let remainingIndices=pairs.map((_,i)=>i);
+let currentIndex=null;
+let score={correct:0,incorrect:0,total:0};
+let answered=false;
+let scoreboard=JSON.parse(localStorage.getItem("scoreboard"))||[];
+
 const question=document.getElementById("question");
 const answerInput=document.getElementById("answerInput");
 const checkBtn=document.getElementById("checkBtn");
@@ -133,178 +231,75 @@ const hintBtn=document.getElementById("hintBtn");
 const feedback=document.getElementById("feedback");
 const hint=document.getElementById("hint");
 const scoreDisplay=document.getElementById("score");
-const letterBar=document.getElementById("letterBar");
-const showAllBtn=document.getElementById("showAllBtn");
-const totalCount=document.getElementById("totalCount");
-const rainbowBtn=document.getElementById("rainbowBtn");
-const stopRainbowBtn=document.getElementById("stopRainbowBtn");
-const resetDesignBtn=document.getElementById("resetDesignBtn");
+const scoreList=document.getElementById("scoreList");
 
-const bgColorPicker=document.getElementById("bgColorPicker");
-const textColorPicker=document.getElementById("textColorPicker");
-const buttonColorPicker=document.getElementById("buttonColorPicker");
-const containerColorPicker=document.getElementById("containerColorPicker");
-const cardColorPicker=document.getElementById("cardColorPicker");
-const fontPicker=document.getElementById("fontPicker");
-
-// Design
-bgColorPicker.addEventListener("input",()=>document.body.style.background=bgColorPicker.value);
-textColorPicker.addEventListener("input",()=>document.body.style.color=textColorPicker.value);
-buttonColorPicker.addEventListener("input",()=>document.querySelectorAll("button").forEach(b=>b.style.background=buttonColorPicker.value));
-containerColorPicker.addEventListener("input",()=>document.querySelector(".container").style.background=containerColorPicker.value);
-cardColorPicker.addEventListener("input",()=>document.querySelectorAll(".vocabCard").forEach(c=>c.style.background=cardColorPicker.value));
-fontPicker.addEventListener("change",()=>document.body.style.fontFamily=fontPicker.value);
-
-// Design reset
-resetDesignBtn.onclick = () => {
-  bgColorPicker.value = "#f5f7fa";
-  textColorPicker.value = "#000000";
-  buttonColorPicker.value = "#4f46e5";
-  containerColorPicker.value = "#ffffff";
-  cardColorPicker.value = "#f0f0f0";
-  fontPicker.value = "'Poppins', sans-serif";
-
-  document.body.style.background = bgColorPicker.value;
-  document.body.style.color = textColorPicker.value;
-  document.querySelector(".container").style.background = containerColorPicker.value;
-  document.querySelectorAll("button").forEach(b => b.style.background = buttonColorPicker.value);
-  document.querySelectorAll(".vocabCard").forEach(c => c.style.background = cardColorPicker.value);
-  document.body.style.fontFamily = fontPicker.value;
-
-  if (rainbowInterval) { clearInterval(rainbowInterval); rainbowInterval=null; }
-};
-
-// Regenbogenmodus
-let rainbowInterval=null;
-rainbowBtn.onclick=()=>{
-  if(rainbowInterval) return;
-  let hue=0;
-  rainbowInterval=setInterval(()=>{
-    document.body.style.background=`hsl(${hue},80%,85%)`;
-    document.body.style.color=`hsl(${(hue+180)%360},80%,20%)`;
-    document.querySelector(".container").style.background=`hsl(${(hue+90)%360},80%,95%)`;
-    document.querySelectorAll("button").forEach(b=>b.style.background=`hsl(${(hue+60)%360},80%,50%)`);
-    document.querySelectorAll(".vocabCard").forEach(c=>c.style.background=`hsl(${(hue+30)%360},80%,90%)`);
-    hue=(hue+1)%360;
-  },50);
-};
-stopRainbowBtn.onclick=()=>{
-  if(rainbowInterval){ clearInterval(rainbowInterval); rainbowInterval=null;
-    document.body.style.background=bgColorPicker.value;
-    document.body.style.color=textColorPicker.value;
-    document.querySelector(".container").style.background=containerColorPicker.value;
-    document.querySelectorAll("button").forEach(b=>b.style.background=buttonColorPicker.value);
-    document.querySelectorAll(".vocabCard").forEach(c=>c.style.background=cardColorPicker.value);
-  }
-};
-
-// Funktionen
-function save(){ localStorage.setItem("vokabeln",JSON.stringify(pairs)); }
-function renderList(filterLetter=null){
-  vocabGrid.innerHTML="";
-  let display=pairs;
-  if(filterLetter) display=pairs.filter(p=>p.front[0].toLowerCase()===filterLetter.toLowerCase());
-  display.forEach((p,i)=>{
-    const div=document.createElement("div");
-    div.className="vocabCard";
-    div.innerHTML=`<span>${p.front}</span><span>${p.back.join("; ")}</span>`;
-    const del=document.createElement("button");
-    del.textContent="Löschen"; del.classList.add("deleteBtn");
-    del.onclick=()=>{ pairs.splice(i,1); save(); renderList(filterLetter); };
-    div.appendChild(del);
-    vocabGrid.appendChild(div);
-  });
-  totalCount.textContent=`Anzahl der Vokabeln: ${display.length}`;
-}
-function renderLetterBar(){
-  letterBar.innerHTML="";
-  for(let i=65;i<=90;i++){
-    const btn=document.createElement("button");
-    btn.textContent=String.fromCharCode(i);
-    btn.onclick=()=>renderList(String.fromCharCode(i));
-    letterBar.appendChild(btn);
-  }
+function renderScoreboard(){
+scoreList.innerHTML="";
+scoreboard.forEach((s,i)=>{
+const li=document.createElement('li');
+li.textContent=\`\${s.date} — Richtig: \${s.correct} | Falsch: \${s.incorrect} | Gesamt: \${s.total}\`;
+scoreList.appendChild(li);
+});
 }
 
-// Add
-addBtn.onclick=()=>{
-  if(!frontInput.value.trim()||!backInput.value.trim()) return;
-  const backs=backInput.value.split(";").map(x=>x.trim()).filter(x=>x);
-  pairs.push({front:frontInput.value.trim(),back:backs});
-  frontInput.value=""; backInput.value="";
-  save(); renderList();
-};
-
-// Show all
-showAllBtn.onclick=()=>renderList();
-
-// Quiz
-function startQuiz(){
-  if(pairs.length===0){ alert("Keine Vokabeln gespeichert!"); return; }
-  editorSection.classList.add("hidden");
-  quizSection.classList.remove("hidden");
-  score={correct:0, incorrect:0, total:0};
-  nextQuestion(true);
+function updateScoreboard(){
+const entry={correct:score.correct,incorrect:score.incorrect,total:score.total,date:new Date().toLocaleString()};
+scoreboard.push(entry);
+localStorage.setItem("scoreboard",JSON.stringify(scoreboard));
+renderScoreboard();
 }
-function nextQuestion(force){
-  if(pairs.length===0) return;
-  let idx=Math.floor(Math.random()*pairs.length);
-  if(!force && pairs.length>1 && idx===currentIndex) idx=(idx+1)%pairs.length;
-  currentIndex=idx;
-  question.textContent=`Übersetze: ${pairs[idx].front}`;
-  answerInput.value=""; feedback.textContent=""; hint.textContent="";
-  answered=false;
+
+function nextQuestion(){
+if(remainingIndices.length===0){
+updateScoreboard();
+remainingIndices=pairs.map((_,i)=>i);
+score={correct:0,incorrect:0,total:0};
+scoreDisplay.textContent="Richtig:0 | Falsch:0 | Gesamt:0";
+alert("Runde beendet! Neue Runde beginnt.");
 }
+const rand=Math.floor(Math.random()*remainingIndices.length);
+currentIndex=remainingIndices[rand];
+remainingIndices.splice(rand,1);
+question.textContent="Übersetze: "+pairs[currentIndex].front;
+answerInput.value=""; feedback.textContent=""; hint.textContent=""; answered=false;
+}
+
 function checkAnswer(){
-  if(currentIndex===null || answered) return;
-  const corrects=pairs[currentIndex].back.map(x=>x.toLowerCase());
-  const user=answerInput.value.trim().toLowerCase();
-  const isCorrect=corrects.includes(user);
-  if(isCorrect){
-    feedback.textContent=`Richtig! ✅`;
-    feedback.style.color="green";
-    score.correct++;
-  } else {
-    feedback.textContent=`Falsch! ❌ Richtig: ${pairs[currentIndex].back.join("; ")}`;
-    feedback.style.color="red";
-    score.incorrect++;
-  }
-  score.total=score.correct+score.incorrect;
-  scoreDisplay.textContent=`Richtig: ${score.correct} | Falsch: ${score.incorrect} | Gesamt: ${score.total}`;
-  answered=true;
+if(currentIndex===null||answered) return;
+const corrects=pairs[currentIndex].back.map(x=>x.toLowerCase());
+const user=answerInput.value.trim().toLowerCase();
+const isCorrect=corrects.includes(user);
+if(isCorrect){ feedback.textContent="Richtig! ✅"; feedback.style.color="green"; score.correct++; }
+else{ 
+let correctHint=pairs[currentIndex].back.map(a=>a.split(' ').map(w=>["der","die","das"].includes(w.toLowerCase())?w:w[0]+'*'.repeat(w.length-1)).join(' '));
+feedback.textContent="Falsch! Korrekt: "+pairs[currentIndex].back.join("; ");
+feedback.style.color="red"; 
+score.incorrect++; 
 }
-function showHint(){
-  if(currentIndex===null) return;
-  const firstAnswer=pairs[currentIndex].back[0];
-  const words=firstAnswer.split(' ');
-  let hintText=words.map(word=>{
-    if(word.toLowerCase()==='der'||word.toLowerCase()==='die'||word.toLowerCase()==='das'){
-      return word;
-    } else {
-      return word[0]+'*'.repeat(word.length-1);
-    }
-  }).join(' ');
-  hint.textContent=hintText;
+score.total=score.correct+score.incorrect;
+scoreDisplay.textContent=\`Richtig: \${score.correct} | Falsch: \${score.incorrect} | Gesamt: \${score.total}\`;
+answered=true;
 }
 
-// Buttons
-startQuizBtn.onclick=startQuiz;
-editBtn.onclick=()=>{ quizSection.classList.add("hidden"); editorSection.classList.remove("hidden"); };
-resetBtn.onclick=()=>{
-  if(confirm("Alle Vokabeln löschen?")){
-    pairs=[]; save(); renderList();
-    feedback.textContent=""; scoreDisplay.textContent="";
-    editorSection.classList.remove("hidden"); quizSection.classList.add("hidden");
-    score={correct:0, incorrect:0, total:0};
-  }
+hintBtn.onclick=()=>{
+if(currentIndex===null) return;
+const hints=pairs[currentIndex].back.map(a=>a.split(' ').map(w=>["der","die","das"].includes(w.toLowerCase())?w:w[0]+'*'.repeat(w.length-1)).join(' '));
+hint.innerHTML=hints.join('<br>');
 };
-checkBtn.onclick=checkAnswer;
-nextBtn.onclick=()=>nextQuestion(false);
-hintBtn.onclick=showHint;
 
-// Initial
-renderLetterBar();
-renderList();
+checkBtn.onclick=checkAnswer;
+nextBtn.onclick=nextQuestion;
+
+renderScoreboard();
+nextQuestion();
+<\/script>
+</body>
+</html>
+`;
+
+quizWindow.document.write(newWindowHtml);
+quizWindow.document.close();
+};
 </script>
 </body>
 </html>
