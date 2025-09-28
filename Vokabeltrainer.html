@@ -162,7 +162,7 @@ function renderList() {
   list.innerHTML = "";
   pairs.forEach((p,i)=>{
     const li = document.createElement("li");
-    li.innerHTML = `<span>${p.front} → ${Array.isArray(p.back)?p.back.join("; "):p.back}</span>`;
+    li.innerHTML = `<span>${p.front} → ${p.back.join("; ")}</span>`;
     const del = document.createElement("button");
     del.textContent="Löschen"; del.classList.add("deleteBtn");
     del.onclick=()=>{ pairs.splice(i,1); save(); renderList(); };
@@ -201,9 +201,8 @@ function nextQuestion(force){
 function checkAnswer(){
   if(currentIndex===null) return;
   const correctAnswers=pairs[currentIndex].back.map(a=>a.toLowerCase());
-  const user=answerInput.value.trim().toLowerCase();
-  const userClean=user.replace(/^(der|die|das)\s+/i,"");
-  const isCorrect=correctAnswers.some(ans=>userClean.includes(ans.toLowerCase()));
+  const user=answerInput.value.trim().toLowerCase().replace(/^(der|die|das)\s+/i,"");
+  const isCorrect=correctAnswers.some(ans=>user.includes(ans.toLowerCase()));
   feedback.textContent=isCorrect?"Richtig!":`Falsch — richtig wäre: ${pairs[currentIndex].back.join("; ")}`;
   feedback.style.color=isCorrect?"green":"red";
   score.total++; if(isCorrect) score.correct++;
@@ -212,9 +211,10 @@ function checkAnswer(){
 
 hintBtn.onclick=()=>{
   if(currentIndex===null) return;
-  const firstAnswer=pairs[currentIndex].back[0];
-  const letters=Math.min(3,firstAnswer.length);
-  const hintText=firstAnswer.substring(0,letters)+"*".repeat(firstAnswer.length-letters);
+  const answers=pairs[currentIndex].back;
+  const randAnswer=answers[Math.floor(Math.random()*answers.length)];
+  const letters=Math.min(3,randAnswer.length);
+  const hintText=randAnswer.substring(0,letters)+"*".repeat(randAnswer.length-letters);
   hint.textContent=`Tipp: ${hintText}`;
 }
 
@@ -225,42 +225,12 @@ function resetAll(){
   editorSection.classList.remove("hidden"); quizSection.classList.add("hidden");
 }
 
-function exportCSV(){
-  if(pairs.length===0) return alert("Keine Vokabeln zum Exportieren.");
-  let csv="Fremdsprache,Deutsch\n";
-  pairs.forEach(p=>{ csv+=`"${p.front.replace(/"/g,'""')}","${Array.isArray(p.back)?p.back.join("; ").replace(/"/g,'""'):p.back}"\n`; });
-  const blob=new Blob([csv],{type:"text/csv"});
-  const url=URL.createObjectURL(blob); const a=document.createElement("a");
-  a.href=url; a.download="vokabeln.csv"; a.click(); URL.revokeObjectURL(url);
-}
-
-function importCSV(file){
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const text=e.target.result;
-    const lines=text.split("\n").slice(1);
-    lines.forEach(line=>{
-      const cols=line.split(",");
-      if(cols.length>=2){
-        const front=cols[0].replace(/^\"|\"$/g,"").trim();
-        const back=cols[1].replace(/^\"|\"$/g,"").trim().split(";").map(s=>s.trim());
-        if(front && back.length>0) pairs.push({front,back});
-      }
-    });
-    save(); renderList(); alert("Import abgeschlossen!");
-  };
-  reader.readAsText(file);
-}
-
 addBtn.onclick=addPair;
 startQuizBtn.onclick=startQuiz;
 editBtn.onclick=()=>{ quizSection.classList.add("hidden"); editorSection.classList.remove("hidden"); };
 resetBtn.onclick=resetAll;
 checkBtn.onclick=checkAnswer;
 nextBtn.onclick=()=>nextQuestion(false);
-document.getElementById("exportBtn").onclick=exportCSV;
-document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
-document.getElementById("importFile").onchange=e=>{ if(e.target.files.length>0) importCSV(e.target.files[0]); };
 
 renderList();
 </script>
